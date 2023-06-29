@@ -55,6 +55,9 @@ else
     rm -f google-chrome-stable_current_i386.deb
 fi
 
+## Installing clean up
+sudo apt install lsof
+
 echo "Cloning React Shared Tests Repo.."
 mkdir $REACT_TESTS_FOLDER
 cd ./$REACT_TESTS_FOLDER
