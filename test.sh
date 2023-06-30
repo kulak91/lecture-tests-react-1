@@ -7,6 +7,7 @@ HOMETASK_ID=${4:-null}
 
 REACT_TESTS_SHARED_REPO="https://github.com/kulak91/lecture-react-tests-shared.git"
 REACT_TESTS_FOLDER="react-tests"
+REACT_TESTS_COMMAND="test:base"
 REACT_PORT=3000
 
 
@@ -31,14 +32,14 @@ if [ -d ./"$REACT_TESTS_FOLDER" ]; then
 fi
 # ---
 
-# Check if the repository exists
-# if [ "$REPO_EXISTS" == true ]
-# then
-#    echo 'Repo exists'
-# else
-#    $(. send-error.sh "$HOMETASK_ID" "$TOKEN")
-#     exit 1
-# fi
+Check if the homework repository exists
+if [ "$REPO_EXISTS" == true ]
+then
+   echo 'Repo exists'
+else
+   $(. send-error.sh "$HOMETASK_ID" "$TOKEN")
+    exit 1
+fi
 
 # echo "Installing Chrome.."
 # if [[ $(getconf LONG_BIT) = "64" ]]
@@ -70,11 +71,10 @@ cd ./$CHECK_FOLDER
 git clone "$GITHUB_URL" .
 npm i
 BROWSER=none npx react-scripts start > server.log &
-REACT_SERVER_PID=$!
 
-echo "$REACT_SERVER_PID"
 
-# Waiting for react to compile
+echo "Waiting for react to compile.."
+
 while true; do
   if grep -q -E "Compiled successfully!" server.log; then
     echo "React server compiled successfully!"
@@ -87,6 +87,12 @@ while true; do
     exit 1
   fi
 
+  if grep -q -E "Something is already running on port" server.log; then
+    ERROR_TEXT="Another react app is running.."
+    echo "$ERROR_TEXT"
+    $(. send-error.sh "$HOMETASK_ID" "$TOKEN" "$ERROR_TEXT")
+    exit 1
+  fi
   # if ! kill -0 "$REACT_SERVER_PID" 2>/dev/null; then
   #   echo "React server process has terminated before the expected message."
   #   kill "$REACT_SERVER_PID"
@@ -100,7 +106,7 @@ done
 
 echo "Running Tests.."
 cd ../$REACT_TESTS_FOLDER
-npm run test:base
+npm run $REACT_TESTS_COMMAND
 node merge.js
 cp ./results/report.json ../
 
