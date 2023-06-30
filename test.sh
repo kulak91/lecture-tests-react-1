@@ -111,7 +111,15 @@ node merge.js
 cp ./results/report.json ../
 
 echo "Clean Up.."
-lsof -i :"$REACT_PORT" | awk 'NR>1 {print $2}' | xargs kill
+# lsof -i :"$REACT_PORT" | awk 'NR>1 {print $2}' | xargs kill
+PID=$(netstat -tlnp | grep ":$REACT_PORT " | awk '{print $7}' | awk -F '/' '{print $1}')
+if [[ -n $PID ]]; then
+  echo "Process is running on port $REACT_PORT with PID $PID"
+  kill $PID
+else
+  echo "No process found running on port $REACT_PORT"
+fi
+
 # echo "Generating Homework Test Report.."
 # npx react-scripts test --watchAll=false --json > report.json
 
