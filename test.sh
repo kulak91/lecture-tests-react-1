@@ -42,22 +42,6 @@ else
     exit 1
 fi
 
-# echo "Installing Chrome.."
-# if [[ $(getconf LONG_BIT) = "64" ]]
-# then
-#     echo "64bit Detected" &&
-#     echo "Installing Google Chrome" &&
-#     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb &&
-#     sudo dpkg -i google-chrome-stable_current_amd64.deb &&
-#     rm -f google-chrome-stable_current_amd64.deb
-# else
-#     echo "32bit Detected" &&
-#     echo "Installing Google Chrome" &&
-#     wget https://dl.google.com/linux/direct/google-chrome-stable_current_i386.deb &&
-#     sudo dpkg -i google-chrome-stable_current_i386.deb &&
-#     rm -f google-chrome-stable_current_i386.deb
-# fi
-
 echo "Cloning React Shared Tests Repo.."
 mkdir $REACT_TESTS_FOLDER
 cd ./$REACT_TESTS_FOLDER
@@ -112,14 +96,7 @@ node merge.js
 cp ./results/report.json ../
 
 echo "Clean Up.."
-# lsof -i :"$REACT_PORT" | awk 'NR>1 {print $2}' | xargs kill
-PID=$(netstat -tlnp | grep ":$REACT_PORT " | awk '{print $7}' | awk -F '/' '{print $1}')
-if [[ -n $PID ]]; then
-  echo "Process is running on port $REACT_PORT with PID $PID"
-  kill $PID
-else
-  echo "No process found running on port $REACT_PORT"
-fi
+lsof -i :"$REACT_PORT" | awk 'NR>1 {print $2}' | xargs kill
 
 # echo "Generating Homework Test Report.."
 # npx react-scripts test --watchAll=false --json > report.json
