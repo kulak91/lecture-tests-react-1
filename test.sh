@@ -79,8 +79,6 @@ while true; do
 
   sleep 1
 done
-# "Failed to compile."
-# "Compiled successfully!"
 
 echo "Running Tests.."
 cd ../$REACT_TESTS_FOLDER

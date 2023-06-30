@@ -17,20 +17,3 @@ cat ./result.json
     "generatedFeedback": string
 }
 ```
-
-
-## Github REST API
-
-To make more than 50 calls you need to set up token:
-
-1. Create .env file
-   ```bash
-   cp .env.example .env
-   ```
-
-2. Create GitHub [personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
-   > Settings -> Developer Settings -> Personal access token -> Generate token
-
-3. Add generated token to env variable: GITHUB_TOKEN
-
-4. Enjoy
