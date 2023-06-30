@@ -33,7 +33,6 @@ fi
 # ---
 
 echo "Check if the homework repository exists"
-
 if [ "$REPO_EXISTS" == true ]
 then
    echo 'Repo exists'
@@ -59,7 +58,6 @@ BROWSER=none npx react-scripts start > server.log &
 
 
 echo "Waiting for react to compile.."
-
 while true; do
   if grep -q -E "Compiled successfully!" server.log; then
     echo "React server compiled successfully!"
@@ -92,17 +90,6 @@ cp ./results/report.json ../
 
 echo "Clean Up.."
 lsof -i :"$REACT_PORT" | awk 'NR>1 {print $2}' | xargs kill
-
-# echo "Generating Homework Test Report.."
-# npx react-scripts test --watchAll=false --json > report.json
-
-# cd ../
-
-# echo "Installing own dependencies.."
-# npm i
-
-# echo "Writing report.."
-# npm run report
 
 echo "Creating feedback.."
 cd ../
