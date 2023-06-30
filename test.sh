@@ -32,7 +32,8 @@ if [ -d ./"$REACT_TESTS_FOLDER" ]; then
 fi
 # ---
 
-Check if the homework repository exists
+echo "Check if the homework repository exists"
+
 if [ "$REPO_EXISTS" == true ]
 then
    echo 'Repo exists'
