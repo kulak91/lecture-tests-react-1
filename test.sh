@@ -7,6 +7,7 @@ HOMETASK_ID=${4:-null}
 
 REACT_TESTS_SHARED_REPO="https://github.com/kulak91/lecture-react-tests-shared.git"
 REACT_TESTS_FOLDER="react-tests"
+REACT_PORT=3000
 
 
 CHECK_FOLDER="tmp"
@@ -55,9 +56,6 @@ fi
 #     rm -f google-chrome-stable_current_i386.deb
 # fi
 
-## Installing clean up
-apt install lsof
-
 echo "Cloning React Shared Tests Repo.."
 mkdir $REACT_TESTS_FOLDER
 cd ./$REACT_TESTS_FOLDER
@@ -84,7 +82,7 @@ while true; do
   elif grep -q -E "Failed to compile" server.log; then
     ERROR_TEXT="React server failed to compile."
     echo "$ERROR_TEXT"
-    lsof -i :3000 | awk 'NR>1 {print $2}' | xargs kill
+    lsof -i :"$REACT_PORT" | awk 'NR>1 {print $2}' | xargs kill
     $(. send-error.sh "$HOMETASK_ID" "$TOKEN" "$ERROR_TEXT")
     exit 1
   fi
@@ -107,7 +105,7 @@ node merge.js
 cp ./results/report.json ../
 
 echo "Clean Up.."
-lsof -i :3000 | awk 'NR>1 {print $2}' | xargs kill
+lsof -i :"$REACT_PORT" | awk 'NR>1 {print $2}' | xargs kill
 # echo "Generating Homework Test Report.."
 # npx react-scripts test --watchAll=false --json > report.json
 
