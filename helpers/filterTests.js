@@ -1,7 +1,5 @@
 const filterTests = (tests, prefix) => {
-	return tests.reduce((testFromTestSuit, testSuit) => {
-		return [...testFromTestSuit, ...testSuit.assertionResults.filter(test => test.fullName.startsWith(prefix))]
-	}, []);
+  return tests.find(tests => tests.name.startsWith(prefix)).tests;
 };
 
 module.exports = filterTests;

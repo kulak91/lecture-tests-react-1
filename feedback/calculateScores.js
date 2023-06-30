@@ -4,21 +4,17 @@ const getTotal = scores => Object.keys(scores).reduce((result, key) => result + 
 
 const calculate = (filteredTests, scores) => {
 	return filteredTests.reduce((result, test) => {
-		const testScore = test.status === 'passed' ? scores[test.title] : 0;
+		const testScore = test.state === 'passed' ? scores[test.name] : 0;
 
 		return result + testScore;
 	}, 0);
 };
 
-const getMessage = (failureMessages) => {
-	return failureMessages.join('\n');
-};
-
 const getErrorTests = (tests) => {
-	return tests.filter(test => test.status === 'failed').reduce((result, test) => {
+	return tests.filter(test => test.state === 'failed').reduce((result, test) => {
 		return Object.assign({}, result, {
-			[test.title]: {
-				message: getMessage(test.failureMessages)
+			[test.name]: {
+				message: test.error
 			}
 		});
 	}, {});

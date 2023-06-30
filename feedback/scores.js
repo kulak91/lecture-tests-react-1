@@ -1,38 +1,65 @@
 module.exports = {
 
-// 8
-// UNIT_TESTS: {
-//   UNIT_TEST_1: 0.72,
-//   UNIT_TEST_2: 0.72,
-//   UNIT_TEST_3: 0.72,
-//   UNIT_TEST_4: 0.72,
-//   UNIT_TEST_5: 0.72,
-//   UNIT_TEST_6: 0.72,
-//   UNIT_TEST_7: 0.72,
-//   UNIT_TEST_8: 0.72,
-//   UNIT_TEST_9: 0.72,
-//   UNIT_TEST_10: 0.72,
-//   UNIT_TEST_11: 0.8,
-// },
-UNIT_TESTS: {
-  UNIT_TEST_1: 1,
-  UNIT_TEST_2: 1,
-  UNIT_TEST_3: 1,
-  UNIT_TEST_4: 1,
-  UNIT_TEST_5: 1,
-  UNIT_TEST_6: 1,
-  UNIT_TEST_7: 1,
-  UNIT_TEST_8: 1,
-  UNIT_TEST_9: 1,
-  UNIT_TEST_10: 1,
-  UNIT_TEST_11: 2,
-},
-// 1
-INTEGRATION_TEST: {
-  HAS_INTEGRATION_TEST: 2,
-},
-// -2
-TOTAL_TESTS_AMOUNT: {
-  HAS_PROPER_AMOUNT_OF_TESTS: 4,
-},
+  'Bookings Page': {
+    'booking should contain title, date, number of guests and final price': 1,
+    'should cancel a booking on cancel button click': 1,
+    'should sort bookings by date ascending': 1,
+  },
+  Footer: {
+    'should be visible on main page': 1,
+    'should be visible on sign in page': 1,
+    'should be at the bottom of a page': 1,
+  },
+  Header: {
+    'should be visible on main page': 1,
+    'should have navigation on main page': 1,
+    'should not have navigation on sign in page': 1,
+    'should navigate to main page on logo click': 1,
+    'should navigate to bookings page on bookings item click': 1,
+    'should show profile navigation on profile item hover': 1,
+    'profile navigation should have username': 1,
+    'should navigate to sign in page on sign out button click': 1,
+  },
+  'Main Page': {
+    'trip card should contain title, image, duration, level, price and link to trip page': 1,
+    'should filter cards by search': 1,
+    'should filter cards by level': 1,
+    'should filter cards by duration': 1,
+    'should apply multiple filters at the same time': 1,
+    'should handle filters reset': 1,
+  },
+  Routing: {
+    'should have /sign-up route for sign up page': 1,
+    'should have /sign-in route for sign in page': 1,
+    'should have / route for main page': 1,
+    'should have /trip/:id route for trip page': 1,
+    'should have /bookings route for bookings page': 1,
+    'should navigate to main page on unknown route': 1,
+  },
+  'Sign In Page': {
+    'form should contain email and password fields': 1,
+    'should not submit form when email is missing': 1,
+    'should not submit sign in form when password is invalid': 1,
+    'should navigate to main page after form submit': 1,
+    'should navigate to sign up page on sign up button click': 1,
+  },
+  'Sign Up Page': {
+    'form should contain full name, email and password fields': 1,
+    'should not submit form when full name is missing': 1,
+    'should not submit form when email is missing': 1,
+    'should not submit sign in form when password is invalid': 1,
+    'should navigate to main page after form submit': 1,
+    'should navigate to sign in page on sign in button click': 1,
+  },
+  'Trip Page': {
+    'should contain title, image, duration, level, price and description of a trip': 1,
+    'should open modal on book a trip button click': 1,
+    'book a trip modal should contain title, duration, level, date field, guests field and price': 1,
+    'should show total price when changing guests in book a trip modal': 1,
+    'should not submit modal when date is not in the future': 1,
+    'should not submit modal when number of guests is invalid': 1,
+    'should close modal after form submit': 1,
+    'should add one more item to bookings page after modal form submit': 1,
+    'should close modal on close button click': 1,
+  }
 };

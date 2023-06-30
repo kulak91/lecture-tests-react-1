@@ -18,7 +18,7 @@ const localization = require(`./localization/${language}`);
 try {
   const maxScore = 9;
   const testResult = readReport('../report.json');
-  const calculatedResult = calculateScores(testResult.testResults, scores, maxScore);
+  const calculatedResult = calculateScores(testResult.suites, scores, maxScore);
   const mark = Number(calculatedResult.stats.score).toFixed(1);
   const generatedFeedback = render.feedback(localization, calculatedResult);
   const trace = render.trace(localization, calculatedResult);

@@ -78,11 +78,6 @@ while true; do
     $(. send-error.sh "$HOMETASK_ID" "$TOKEN" "$ERROR_TEXT")
     exit 1
   fi
-  # if ! kill -0 "$REACT_SERVER_PID" 2>/dev/null; then
-  #   echo "React server process has terminated before the expected message."
-  #   kill "$REACT_SERVER_PID"
-  #   exit 1
-  # fi
 
   sleep 1
 done
@@ -109,5 +104,6 @@ lsof -i :"$REACT_PORT" | awk 'NR>1 {print $2}' | xargs kill
 # echo "Writing report.."
 # npm run report
 
-# echo "Creating feedback.."
-# npm run feedback -- "$TOKEN" "$LANG"
+echo "Creating feedback.."
+cd ../
+npm run feedback -- "$TOKEN" "$LANG"
