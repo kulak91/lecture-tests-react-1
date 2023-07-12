@@ -8,7 +8,7 @@ HOMETASK_ID=${4:-null}
 REACT_TESTS_SHARED_REPO="https://github.com/kulak91/lecture-react-tests-shared.git"
 REACT_TESTS_FOLDER="react-tests"
 REACT_TESTS_COMMAND="test:base"
-REACT_PORT=3000
+BASE_PORT=3000
 
 
 CHECK_FOLDER="tmp"
@@ -55,13 +55,16 @@ cd ./$CHECK_FOLDER
 git clone "$GITHUB_URL" .
 npm i
 
-echo "Checking React port"
-ss -tanp | grep $REACT_PORT
+echo "Finding Empty React port.."
+REACT_PORT=$(. check-port.sh "$BASE_PORT")
+if [ "$REACT_PORT" == "error" ]
+then
+  echo "Unexpected error occured. Exiting.."
+  exit 1
+fi
 
+echo "Launching React on $REACT_PORT"
 BROWSER=none PORT=$REACT_PORT npx react-scripts start > server.log &
-
-echo "Checking React port"
-ss -tanp | grep $REACT_PORT
 
 echo "Waiting for react to compile.."
 while true; do
@@ -86,17 +89,11 @@ while true; do
   sleep 1
 done
 
-echo "Checking React port"
-ss -tanp | grep $REACT_PORT
-
 echo "Running Tests.."
 cd ../$REACT_TESTS_FOLDER
 npm run $REACT_TESTS_COMMAND
 node merge.js
 cp ./results/report.json ../
-
-echo "Clean Up.."
-lsof -i :"$REACT_PORT" | awk 'NR>1 {print $2}' | xargs kill
 
 echo "Creating feedback.."
 cd ../
