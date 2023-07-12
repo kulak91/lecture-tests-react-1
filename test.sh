@@ -54,8 +54,12 @@ mkdir $CHECK_FOLDER
 cd ./$CHECK_FOLDER
 git clone "$GITHUB_URL" .
 npm i
-BROWSER=none npx react-scripts start > server.log &
 
+nc -vz 127.0.0.1 $REACT_PORT
+
+BROWSER=none PORT=$REACT_PORT npx react-scripts start > server.log &
+
+nc -vz 127.0.0.1 $REACT_PORT
 
 echo "Waiting for react to compile.."
 while true; do
@@ -73,12 +77,14 @@ while true; do
   if grep -q -E "Something is already running on port" server.log; then
     ERROR_TEXT="Another react app is running.."
     echo "$ERROR_TEXT"
-    $(. send-error.sh "$HOMETASK_ID" "$TOKEN" "$ERROR_TEXT")
+    $(sh ./send-error.sh "$HOMETASK_ID" "$TOKEN" "$ERROR_TEXT")
     exit 1
   fi
 
   sleep 1
 done
+
+nc -vz 127.0.0.1 $REACT_PORT
 
 echo "Running Tests.."
 cd ../$REACT_TESTS_FOLDER
