@@ -41,14 +41,6 @@ else
     exit 1
 fi
 
-echo "Cloning React Shared Tests Repo.."
-mkdir $REACT_TESTS_FOLDER
-cd ./$REACT_TESTS_FOLDER
-git clone "$REACT_TESTS_SHARED_REPO" .
-cp .env.example .env
-npm i
-cd ../
-
 echo "Cloning student's homework.."
 mkdir $CHECK_FOLDER
 cd ./$CHECK_FOLDER
@@ -89,8 +81,18 @@ while true; do
   sleep 1
 done
 
+echo "Cloning React Shared Tests Repo.."
+cd ../
+mkdir $REACT_TESTS_FOLDER
+cd ./$REACT_TESTS_FOLDER
+git clone "$REACT_TESTS_SHARED_REPO" .
+cp .env.example .env
+echo "AUTOTEST_APP_URL=http://localhost:${REACT_PORT}" >> .env
+npm i
+# cd ../
+
 echo "Running Tests.."
-cd ../$REACT_TESTS_FOLDER
+# cd ../$REACT_TESTS_FOLDER
 npm run $REACT_TESTS_COMMAND
 node merge.js
 cp ./results/report.json ../
