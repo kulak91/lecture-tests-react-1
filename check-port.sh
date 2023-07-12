@@ -1,12 +1,9 @@
 #!/bin/bash
 
-FILENAME=/proc/net/netstat
-
-PORT=${1:-3000}
+base_port=${1:-3000}
 host="localhost"
-start_port=$PORT
+start_port=$base_port
 end_port=3100
-EMPTY_PORT=$?
 
 for ((port=start_port; port<=end_port; port++))
 do

@@ -67,14 +67,14 @@ while true; do
     ERROR_TEXT="React server failed to compile."
     echo "$ERROR_TEXT"
     lsof -i :"$REACT_PORT" | awk 'NR>1 {print $2}' | xargs kill
-    $(. send-error.sh "$HOMETASK_ID" "$TOKEN" "$ERROR_TEXT")
+    $(. ../send-error.sh "$HOMETASK_ID" "$TOKEN" "$ERROR_TEXT")
     exit 1
   fi
 
   if grep -q -E "Something is already running on port" server.log; then
     ERROR_TEXT="Another react app is running.."
     echo "$ERROR_TEXT"
-    $(sh ./send-error.sh "$HOMETASK_ID" "$TOKEN" "$ERROR_TEXT")
+    $(. ../send-error.sh "$HOMETASK_ID" "$TOKEN" "$ERROR_TEXT")
     exit 1
   fi
 
@@ -89,10 +89,8 @@ git clone "$REACT_TESTS_SHARED_REPO" .
 cp .env.example .env
 echo "AUTOTEST_APP_URL=http://localhost:${REACT_PORT}" >> .env
 npm i
-# cd ../
 
 echo "Running Tests.."
-# cd ../$REACT_TESTS_FOLDER
 npm run $REACT_TESTS_COMMAND
 node merge.js
 cp ./results/report.json ../
