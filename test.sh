@@ -56,7 +56,7 @@ git clone "$GITHUB_URL" .
 npm i
 
 echo "Finding Empty React port.."
-REACT_PORT=$(. check-port.sh "$BASE_PORT")
+REACT_PORT=$(. ./check-port.sh "$BASE_PORT")
 if [ "$REACT_PORT" == "error" ]
 then
   echo "Unexpected error occured. Exiting.."
